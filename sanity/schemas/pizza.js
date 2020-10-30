@@ -50,19 +50,32 @@ export default {
     select: {
       title: 'name',
       media: 'image',
-      topping0: 'toppings.0.name',
-      topping1: 'toppings.1.name',
-      topping2: 'toppings.2.name',
-      topping3: 'toppings.3.name',
+      topping0name: 'toppings.0.name',
+      topping1name: 'toppings.1.name',
+      topping2name: 'toppings.2.name',
+      topping3name: 'toppings.3.name',
+      topping0vegetarian: 'toppings.0.vegetarian',
+      topping1vegetarian: 'toppings.1.vegetarian',
+      topping2vegetarian: 'toppings.2.vegetarian',
+      topping3vegetarian: 'toppings.3.vegetarian',
     },
     prepare: ({ title, media, ...toppings }) => {
-      // 1. Filter undefined toppings out
-      const tops = Object.values(toppings).filter(Boolean);
+      // 1. Dividing toppings by key name and filter out undefined values
+      const divideByKey = (keyName) =>
+        Object.keys(toppings).reduce(
+          (obj, key) =>
+            toppings[key] !== undefined && key.toString().includes(keyName)
+              ? [...obj, toppings[key]]
+              : [...obj],
+          []
+        );
+      const topsName = divideByKey('name');
+      const vegetarian = divideByKey('vegetarian').every(Boolean);
       // 2. Return the preview object for the pizza
       return {
-        title,
+        title: `${title} ${vegetarian ? '🌱' : ''}`,
         media,
-        subtitle: tops.join(', '),
+        subtitle: topsName.join(', '),
       };
     },
   },
