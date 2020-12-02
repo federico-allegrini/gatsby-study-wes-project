@@ -43,9 +43,18 @@ async function wait(ms = 0) {
 // Use "netlify dev" for enable the function
 
 exports.handler = async (event, context) => {
+  // Wait 550 ms
   await wait(500);
+  // Get the body
   const body = JSON.parse(event.body);
   console.log(body);
+  // Check if they have filled out the honeypot
+  if (body.mapleSyrup) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({ message: `Boop beep bop zzzst goodbye!` }),
+    };
+  }
   // Validate the data coming in is correct
   const requiredFields = ['name', 'email', 'order'];
   for (const field of requiredFields) {
