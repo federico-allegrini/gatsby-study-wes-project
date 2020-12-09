@@ -26,7 +26,7 @@ function HotSlices({ hotSlices }) {
       <h2 className="center">
         <span className="mark tilt">Hot Slices</span>
       </h2>
-      <p>Come on by, buy the slice!</p>
+      <p>Come on by, buy the slice!!</p>
       {!hotSlices && <LoadingGrid count={4} />}
       {hotSlices && !hotSlices?.length && <p>Nothing in the Case!</p>}
       {hotSlices?.length && <ItemGrid items={hotSlices} />}
